@@ -1,42 +1,28 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { PasswordCheckerService } from '../../services/password-checker.service';
+import { PasswordInputComponent } from "../custom/password-input/password-input.component";
+import { PasswordStrengthComponent } from "../custom/password-strength/password-strength.component";
 
 @Component({
   selector: 'app-password-checker',
   standalone: true,
-  imports: [ReactiveFormsModule, CommonModule],
+  imports: [ReactiveFormsModule, CommonModule, PasswordInputComponent, PasswordStrengthComponent],
   templateUrl: './password-checker.component.html',
   styleUrl: './password-checker.component.css'
 })
 export class PasswordCheckerComponent {
   formGroup: FormGroup;
-  strength: number = 0;
+
   /**
    *
    */
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private passwordService: PasswordCheckerService) {
     this.formGroup = this.fb.group({
-      password: ''
+      password: '',
+      passwordinput: new FormControl()
     })
-    this.formGroup.get("password")?.valueChanges.subscribe(value => this.checkPassword())
   }
 
-  checkPassword(){
-    var temp: number = 0;
-    var value: string = this.formGroup.get("password")?.value;
-    var letters = /[a-zA-Z]/;
-    var symbols = /[!@#$%^&*(),.?":{}|<>\/\\[\];'`~_+=-]/;
-    var digits = /[1234567890]/;
-    if(letters.test(value)){
-      temp++;
-    }
-    if(symbols.test(value)){
-      temp++;
-    }
-    if(digits.test(value)){
-      temp++;
-    }
-    this.strength = temp;
-  }
 }

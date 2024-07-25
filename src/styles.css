@@ -5,3 +5,15 @@ body{
     margin: 0;
     height: 100vh;
 }
+.red{
+    background-color: red;
+}
+.orange{
+    background-color: orange;
+}
+.green{
+    background-color: green;
+}
+.gray{
+    background-color: lightgray;
+}
